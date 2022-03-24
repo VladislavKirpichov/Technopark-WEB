@@ -1,0 +1,10 @@
+{% extends "inc/base.html" %}
+{% load static %}
+
+<dev>
+    {% block content %}
+    {% for question in questions %}
+        {% include "inc/question.html" %}
+    {% endfor %}
+    {% endblock %}
+</dev>

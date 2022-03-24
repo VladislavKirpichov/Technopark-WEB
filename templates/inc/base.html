@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href={% static "../static/css/global.css" %} rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <header class="container d-flex flex-row align-items-center overflow-hidden gap-4">
+        <div class="col-md-2 log">Logo</div>
+        <div class="col-md-4 search">Search</div>
+        <div class="col-md-4 user">Dr. Pepper</div>
+        <div class="col-md-2 login">Login/Logout</div>
+        <hr>
+    </header>
+    <main class="container d-flex flex-row gap-4">
+        <div class="content col">
+            <h3>Questions</h3>
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div class="tags col">
+            <h3>Popular Tags</h3>
+            <div class="tags-content d-flex flex-wrap">
+                <div class="tags-tag">Tag</div>
+                <div class="tags-tag">Tag</div>
+                <div class="tags-tag">Tag</div>
+                <div class="tags-tag">Tag</div>
+                <div class="tags-tag">Tag</div>
+                <div class="tags-tag">Tag</div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
