@@ -12,5 +12,7 @@ QUESTIONS = [
     } for i in range(5)
 ]
 
+TAGS = [f"name {i}" for i in range(50)]
+
 def index(request):
-    return render(request, "index.html", {"questions": QUESTIONS})
+    return render(request, "index.html", {"questions": QUESTIONS}, {"tags": TAGS})
