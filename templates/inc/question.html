@@ -1,14 +1,14 @@
 {% load static %}
 
-<div class="container d-flex flex-row">
-    <div class="avatar">
-        <img alt="avatar">
-    </div>
-    <div class="content">
-        <h5>{{ question.title }}</h5>
-        <p>{{ question.text }}</p>
-    </div>
-    <div class="meta-data">
-        <p>Likes: {{ question.likes }}</p>
+<div style="border: none; border-radius: 16px" class="col-12 card">
+    <div class="row p-3">
+        <div class="col-md-4">
+            <img class="img-thumbnail" src="{% static "{{ question.img }}" %}">
+        </div>
+        <div class="card-body col-md-4">
+            <h4>{{ question.title }}</h4>
+            <p>{{ question.text }}</p>
+            <button class="btn btn-primary">Answer this question</button>
+        </div>
     </div>
 </div>

@@ -1,20 +1,12 @@
 {% extends "inc/base.html" %}
-{% load static %}
 
 <div>
-    {% block header %}
-        {% include "inc/header.html" %}
-    {% endblock %}
-
     {% block content %}
+        <h3>Questions</h3>
         {% for question in questions %}
-            {% include "inc/question.html" %}
-        {% endfor %}
-    {% endblock %}
-
-    {% block tags %}
-        {% for tag in tags %}
-            {% include "inc/tags.html" %}
+            <div class="row my-4">
+                {% include "inc/question.html" %}
+            </div>
         {% endfor %}
     {% endblock %}
 </div>
