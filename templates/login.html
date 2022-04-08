@@ -1,15 +1,12 @@
-{% extends "inc/auth.html" %}
+{% extends "inc/base.html" %}
 
 {% block content %}
-<h3 class="mb-5">Login Page</h3>
-<form class="form">
+    <h3 class="mb-5">Log In</h3>
+    <div class="card p-5">
+        <form class="form">
     <div class="mb-3">
         <label>Login</label>
         <input type="email" class="form-control" id="email" placeholder="awesome_login">
-    </div>
-    <div class="mb-3">
-        <label>Email</label>
-        <input type="email" class="form-control" id="email" placeholder="email@example.com">
     </div>
     <div class="mb-3">
         <label>Password</label>
@@ -18,4 +15,5 @@
     <button class="btn">Login!</button>
     <a style="font-size: 12px; color:#575656; text-decoration: none; margin-left: 16px" href="{% url "index" %}">Return to questions</a>
 </form>
+    </div>
 {% endblock %}

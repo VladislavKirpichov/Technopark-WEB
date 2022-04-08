@@ -3,7 +3,7 @@
 <div style="border: none; border-radius: 16px" class="col-12 card p-2">
     <div class="row">
         <div class="col-sm-12 col-md-3 d-flex justify-content-center align-items-center">
-            <img style="height: 0; padding-bottom: 50%; width: 50%; object-fit: cover" class="img-thumbnail" src="{% static question.img %}">
+            <img style="height: 50%; width: 50%; object-fit: cover" class="img-thumbnail" src="{% static question.img %}">
         </div>
         <div class="card-body col-sm-12 col-md-9">
             <h4><a href="{% url "question" question.id %}">{{ question.title }}</a></h4>

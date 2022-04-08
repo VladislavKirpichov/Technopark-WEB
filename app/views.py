@@ -19,7 +19,7 @@ QUESTIONS = [
         "hot": True,
         "tags": [f"hello", f"tag{i}"],
         "text": f"This is test for qustion #{i}\n" + LOREM_IPSUM,
-        "img": "./img/no_war.jpeg"
+        "img": "/img/img.jpg"
     } for i in range(25)
 ]
 
@@ -65,7 +65,7 @@ def tag(request, tag: str):
 
 
 def hot(request):
-    return render(request, "index.html", {"questions": QUESTIONS[:25]})
+    return render(request, "index.html", {"page_content": QUESTIONS[:25]})
 
 
 def login(request):
@@ -73,5 +73,5 @@ def login(request):
 
 
 def signup(request):
-    return render(request, "index.html", {"questions": QUESTIONS})
+    return render(request, "registration.html")
 
