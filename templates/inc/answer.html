@@ -1,0 +1,16 @@
+{% load static %}
+
+<div style="border: none; border-radius: 16px" class="col-12 card">
+    <div class="row p-3">
+        <div class="col-md-2">
+            <img style="height: 0; padding-bottom: 100%; width: 100%; object-fit: cover" class="img-thumbnail avatar" src="{% static answer.img %}">
+        </div>
+        <div class="answer card-body col-md-6">
+            <h4>{{ answer.user }}</h4>
+            <p>{{ answer.content }}</p>
+            {% if answer.isCorrect %}
+                <h6 class="correct">Correct!</h6>
+            {% endif %}
+        </div>
+    </div>
+</div>

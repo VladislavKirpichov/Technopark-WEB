@@ -1,0 +1,16 @@
+{% extends 'inc/base.html' %}
+
+<div>
+    {% block content %}
+        <h3>{{ question.title }}</h3>
+        <div class="my-4">{% include "inc/question.html" %}</div>
+        <h3>Answers</h3>
+        {% for answer in answers %}
+            <div class="my-4">
+                {% include "inc/answer.html" %}
+            </div>
+        {% endfor %}
+        <hr>
+        <button class="btn">Answer this question</button>
+    {% endblock %}
+</div>
