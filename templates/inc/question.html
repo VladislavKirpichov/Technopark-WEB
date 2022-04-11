@@ -7,7 +7,7 @@
         </div>
         <div class="card-body col-sm-12 col-md-9">
             <h4><a href="{% url "question" question.id %}">{{ question.title }}</a></h4>
-            <p style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">{{ question.text }}</p>
+            <p style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">{{ question.content }}</p>
             <button class="btn btn-primary">Answer this question</button>
         </div>
     </div>
