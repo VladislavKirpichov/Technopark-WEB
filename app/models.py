@@ -38,6 +38,7 @@ class TagManager(models.Manager):
 
 class Tag(models.Model):
     tag = models.CharField(max_length=TAG_LENGTH, blank=True)
+    questions = models.ForeignKey('Question', on_delete=models.CASCADE)
     objects = TagManager()
 
 
@@ -60,6 +61,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to='images', null=True)
     bio = models.TextField(null=True)
+    questions = models.ForeignKey('Question', on_delete=models.CASCADE)
+
     objects = ProfileManager()
 
 class AnswerManager(models.Manager):
@@ -75,6 +78,7 @@ class AnswerManager(models.Manager):
 
 
 class Answer(models.Model):
+    question = models.ForeignKey('Question', on_delete=models.CASCADE)
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
     user_rating = models.IntegerField(null=True)
@@ -95,6 +99,8 @@ class QuestionManager(models.Manager):
                                       # number_of_answers=len(Answer.objects.all().filter(author__question__in=self)),
                                       user_rating=100,
                                       ))
+    def get_tags(self, question_id: int):
+        return Tag.objects.filter(question_id=question_id).all().values()
 
     def get_hot(self):
         return self.filter(hot=True)
@@ -105,24 +111,28 @@ class QuestionManager(models.Manager):
     def get_question_by_id(self, question_id):
         return self.filter(id=question_id)
 
-    def get_questions_by_tag(self, tag: str):
-        return self.filter(tags__in=tag)
+    def get_questions_by_user_id(self, user_id):
+        return Profile.objects.filter(id=user_id)
+
+    def get_questions_tags(self, tag: str):
+        return Tag.objects.filter(tag=tag)
 
     def get_question_answers(self, question_id: int):
-        return Answer.objects.get(id in Question.answers)
+        return Answer.objects.filter(question_id=question_id)
 
 
 class Question(models.Model):
-    tags = models.ManyToManyField(Tag)
     title = models.CharField(max_length=TITLE_LENGTH, blank=True)
     content = models.CharField(max_length=CONTENT_LENGTH, blank=True)
-    answers = models.ForeignKey(Answer, on_delete=models.CASCADE)
     hot = models.BooleanField()
     published_date = models.DateTimeField()
-    author = models.ForeignKey(Profile, models.PROTECT)
     number_of_answers = models.IntegerField(null=True)
-    user_rating = models.IntegerField(null=True)
+
+    # user_rating = models.IntegerField(len(list(Answer.question.id=id))
 
     objects = QuestionManager()
+
+    def __str__(self):
+        return self.title
 
 

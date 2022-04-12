@@ -1,5 +1,5 @@
 from urllib import request
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.paginator import Paginator
@@ -12,21 +12,25 @@ from .models import Question, Answer, Profile, Tag
 
 PAGINATION_SIZE = 10
 
-# Tag.objects.add_new_tags()
-# Profile.objects.add_new_profiles()
-# Question.objects.add_new_questions()
-# Answer.objects.add_new_answers()
 
-def paginator(objects_list, per_page=20):
-    objects = Paginator(objects_list, per_page)
-    return objects
+def paginator(objects_list, request, per_page=20):
+    pages = Paginator(objects_list, PAGINATION_SIZE)
+    page_number = request.GET.get('page')
+    page = pages.get_page(page_number)
+
+    return pages, page
 
 
 def index(request):
-    pages = paginator(Question.objects.all().values(), PAGINATION_SIZE)
-    page_number = request.GET.get('page')
-    page = pages.get_page(page_number)
-    return render(request, "index.html", {"paginator": pages, "page_content": page})
+    pages, page = paginator(Question.objects.all().values(), request, PAGINATION_SIZE)
+    if len(page) == 0:
+        return HttpResponseNotFound("<h1>404</h1>")
+
+    content = {
+        "paginator": pages,
+        "page_content": page,
+    }
+    return render(request, "index.html", content)
 
 
 def ask(request):
@@ -35,13 +39,21 @@ def ask(request):
 
 def question(request, i: int):
     qstn = Question.objects.get_question_by_id(i).values()
-    answers = Paginator(Question.objects.get_question_answers(i).order_by('id').values(), PAGINATION_SIZE)
-    return render(request, "question_page.html", {"question": qstn[0],
-                                                  "answers": answers})
+    if len(qstn) == 0:
+        return HttpResponseNotFound("<h1>404</h1>")
+
+    answers, answer = paginator(Question.objects.get_question_answers(i).values(),
+                                request, PAGINATION_SIZE)
+    content = {
+        "question": qstn[0],
+        "answers": answer
+    }
+
+    return render(request, "question_page.html", content)
 
 
 def tag(request, tag: str):
-    pages = paginator(list(Question.objects.get_questions_by_tag(tag)), request, PAGINATION_SIZE)
+    pages = paginator(Question.objects.get_questions_by_tag(tag).values(), PAGINATION_SIZE)
     page_number = request.GET.get('page')
     page = pages.get_page(page_number)
     return render(request, "index.html", {"paginator": pages, "page_content": page})
