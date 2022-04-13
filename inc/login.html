@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/globals.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body class="bg-light">
+    <header> 
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid navbar-collapse collapse">
+                <a href="#" class="navbar-brand flex-grow-1">AskMe</a>
+                <div class="d-flex justify-content-flexend flex-grow-1">
+                    <ul class="nav nav-pills me-auto mb-2 mb-lg-0">
+                        <li class="nav-item me-2">
+                            <a href="../index.html" class="nav-link">Questions</a>
+                        </li>
+                        <li class="nav-item me-2">
+                            <a href="./inc/base.html" class="nav-link">Hot 🔥</a>
+                        </li>
+                        <li class="nav-item me-2">
+                            <a href="./ask.html" class="nav-link">Ask question!</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nav navbar-nav navbar-right">
+                    <div class="nav-item me-4">
+                         <form action="" class="d-flex">
+                             <input type="text" class="form-control me-2" placeholder="Search">
+                             <button class="btn btn-outline-success btn-header">Search</button>
+                         </form>
+                    </div>
+                    <div class="nav-item me-4 user">
+                        <a class="btn" href="./login.html">Login In</a>
+                        <a class="btn" href="./registration.html">Register</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main style="padding-top: 40px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <h3 class="mb-5">Log In</h3>
+                    <div class="card p-5">
+                        <form class="form">
+                            <div class="md-3 mb-3 row">
+                                <label for="email">Email</label>
+                                <div class="col-8">
+                                    <input type="email" class="form-control" placeholder="example@example.com" id="email"required></input>
+                                </div>
+                            </div>
+                            <div class="md-3 mb-3 row">
+                                <label for="password">Password</label>
+                                <div class="col-8">
+                                    <input type="password" class="form-control" placeholder="123123123" id="password" required></input>
+                                </div>
+                            </div>
+                        <input type="submit" class="btn" value="Login!"></input>
+                        <a style="font-size: 12px; color:#575656; text-decoration: none; margin-left: 16px" href="{% url "index" %}">Return to questions</a>
+                        </form>
+                        
+                    </div>
+                </div>
+                <div class="tags col-4">
+                    <h3>Tags</h3>
+                    <div class="my-4">
+                        <a class="me-4">c++</a>
+                        <a class="me-4">twitter-bootstrap</a>
+                        <a class="me-4">web</a>
+                        <a class="me-4">frontend</a>
+                        <a class="me-4">backend</a>
+                        <a class="me-4">css</a>
+                        <a class="me-4">html</a>
+                        <a class="me-4">loops</a>
+                        <a class="me-4">python</a>
+                        <a class="me-4">django</a>
+                        <a class="me-4">serialization</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
