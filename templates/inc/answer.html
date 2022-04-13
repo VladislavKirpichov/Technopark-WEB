@@ -2,7 +2,7 @@
 
 <div style="border: none; border-radius: 16px" class="col-12 card">
     <div class="row p-3">
-        <div class="col-md-2">
+        <div class="col-md-2 d-flex align-items-center">
             <img style="height: 0; padding-bottom: 100%; width: 100%; object-fit: cover" class="img-thumbnail avatar" src="{% static answer.img %}">
         </div>
         <div class="answer card-body col-md-6">
@@ -11,6 +11,10 @@
             {% if answer.isCorrect %}
                 <h6 class="correct">Correct!</h6>
             {% endif %}
+        </div>
+        <hr>
+        <div class="col-12 d-flex justify-content-center">
+            <button style="background-color: #fff; padding: 4px 8px; border-radius: 4px; border: 1px solid rgba(27, 31, 35, 0.15);">❤️ like</button>
         </div>
     </div>
 </div>

@@ -19,7 +19,7 @@ QUESTIONS = [
         "hot": True,
         "tags": [f"hello", f"tag{i}"],
         "text": f"This is test for qustion #{i}\n" + LOREM_IPSUM,
-        "img": "/img/img.jpg"
+        "img": f"/img/avatar_{i % 3 + 1}.jpeg"
     } for i in range(25)
 ]
 
@@ -29,7 +29,7 @@ ANSWERS = [
         "user": "Vladislav Kirpichov",
         "content": LOREM_IPSUM,
         "questionId": i,
-        "img": "./img/no_war.jpeg"
+        "img": "/img/avatar_1.jpeg"
     } for i in range(25)
 ]
 
