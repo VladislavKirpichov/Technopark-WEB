@@ -6,7 +6,7 @@
             <img style="height: 50%; width: 50%; object-fit: cover" class="img-thumbnail" src="{% static question.img %}">
         </div>
         <div class="card-body col-sm-12 col-md-9">
-            <h4><a href="{% url "question" question.id %}">{{ question.title }}</a></h4>
+            <h4><a style="color: #24292E;" href="{% url "question" question.id %}">{{ question.title }}</a></h4>
             <p style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">{{ question.text }}</p>
             <button class="btn btn-primary">Answer this question</button>
         </div>

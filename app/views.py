@@ -37,14 +37,19 @@ TAGS = [f"tag {i}" for i in range(50)]
 
 
 def paginator(objects_list, request, per_page=20):
-    objects = Paginator(objects_list, per_page)
-    return objects
+    pages = Paginator(objects_list, PAGINATION_SIZE)
+    page_number = request.GET.get('page')
+    page = pages.get_page(page_number)
+
+    return pages, page
 
 
 def index(request):
-    pages = paginator(QUESTIONS, request, PAGINATION_SIZE)
-    page_number = request.GET.get('page')
-    page = pages.get_page(page_number)
+    pages, page = paginator(QUESTIONS, request, PAGINATION_SIZE)
+    content = {
+        "paginator": pages,
+        "page_content": page,
+    }
     return render(request, "index.html", {"paginator": pages, "page_content": page})
 
 
@@ -53,19 +58,29 @@ def ask(request):
 
 
 def question(request, i: int):
-    return render(request, "question_page.html", {"question": QUESTIONS[i],
-                                                  "answers": [answer for answer in ANSWERS if QUESTIONS[i]["id"] == answer["questionId"]]})
+    content = {
+        "question": QUESTIONS[i],
+        "answers": [answer for answer in ANSWERS if QUESTIONS[i]["id"] == answer["questionId"]]
+    }
+    return render(request, "question_page.html", content)
 
 
 def tag(request, tag: str):
-    pages = paginator([qstn for qstn in QUESTIONS if tag in qstn["tags"]], request, PAGINATION_SIZE)
-    page_number = request.GET.get('page')
-    page = pages.get_page(page_number)
-    return render(request, "index.html", {"paginator": pages, "page_content": page})
+    pages, page = paginator([qstn for qstn in QUESTIONS if tag in qstn["tags"]], request, PAGINATION_SIZE)
+    content = {
+        "paginator": pages,
+        "page_content": page, "tag": tag
+    }
+    return render(request, "questions_by_tag.html", content)
 
 
 def hot(request):
-    return render(request, "index.html", {"page_content": QUESTIONS[:25]})
+    pages, page = paginator(QUESTIONS[:25], request, PAGINATION_SIZE)
+    content = {
+        "paginator": pages,
+        "page_content": page, "tag": tag
+    }
+    return render(request, "index.html", content)
 
 
 def login(request):
