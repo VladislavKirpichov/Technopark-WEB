@@ -12,5 +12,10 @@
         {% endfor %}
         <hr>
         <button class="btn">Answer this question</button>
+        <nav class="d-flex justify-content-center nav nav-pills me-auto">
+            {% for p in paginator %}
+                <a class="btn btn-nav me-2" href="?page={{ p.number }}">{{ p.number }}</a>
+            {% endfor %}
+        </nav>
     {% endblock %}
 </div>

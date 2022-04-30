@@ -20,17 +20,20 @@ def paginator(objects_list, request, per_page=20):
 
     return pages, page
 
-
-def index(request):
-    pages, page = paginator(Question.objects.all().values(), request, PAGINATION_SIZE)
-    if len(page) == 0:
-        return HttpResponseNotFound("<h1>404</h1>")
+def make_content(objects_list, request, per_page=20):
+    pages, page = paginator(objects_list, request, per_page)
 
     content = {
         "paginator": pages,
         "page_content": page,
+        "tags": Tag.objects.all().values()[:20]
     }
-    return render(request, "index.html", content)
+
+    return content
+
+
+def index(request):
+    return render(request, "index.html", make_content(Question.objects.all().values(), request))
 
 
 def ask(request):
@@ -40,13 +43,14 @@ def ask(request):
 def question(request, i: int):
     qstn = Question.objects.get_question_by_id(i).values()
     if len(qstn) == 0:
-        return HttpResponseNotFound("<h1>404</h1>")
+        return HttpResponseNotFound("<h1>404 Page Not Found:(</h1>")
 
     answers, answer = paginator(Question.objects.get_question_answers(i).values(),
                                 request, PAGINATION_SIZE)
     content = {
         "question": qstn[0],
-        "answers": answer
+        "paginator": answers,
+        "answers": answer,
     }
 
     return render(request, "question_page.html", content)
@@ -60,7 +64,7 @@ def tag(request, tag: str):
 
 
 def hot(request):
-    return render(request, "index.html", {"page_content": list(Question.objects.get_hot())})
+    return render(request, "index.html", {"page_content": list(Question.objects.get_popular())})
 
 
 def login(request):

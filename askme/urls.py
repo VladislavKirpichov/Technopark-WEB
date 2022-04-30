@@ -15,18 +15,12 @@ Including another URLconf
 """
 from django import views
 from django.contrib import admin
-from django.urls import path
-from pygments.lexer import include
+from django.urls import path, re_path, include
 
 from app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name="index"),
-    path('hot', views.hot, name="hot"),
-    path('tag/<str:tag>', views.tag, name="tag"),
-    path('questions/question<int:i>', views.question, name="question"),
-    path('login', views.login, name="login"),
-    path('registration', views.signup, name="registration"),
-    path('ask', views.ask, name="ask"),
+    re_path(r'', include('app.urls')),
 ]

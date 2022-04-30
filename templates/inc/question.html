@@ -3,26 +3,24 @@
 <div style="border: none; border-radius: 16px" class="col-12 card p-2">
     <div class="row">
         <div class="col-sm-12 col-md-3 d-flex justify-content-center align-items-center">
-            <img style="height: 50%; width: 50%; object-fit: cover" class="img-thumbnail" src="{% static question.img %}">
+            <img style="height: 50%; width: 50%; object-fit: cover" class="img-thumbnail" src="{{ question.user.avatar }}">
         </div>
         <div class="card-body col-sm-12 col-md-9">
-            <h4><a href="{% url "question" question.id %}">{{ question.title }}</a></h4>
+            <h4><a style="color: #24292E;" href="{% url "question" question.id %}">{{ question.title }}</a></h4>
             <p style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">{{ question.content }}</p>
             <button class="btn btn-primary">Answer this question</button>
+            <h6 style="font-size: 12px; margin-top: 8px; color: grey">answers: {{ question.number_of_answers }}</h6>
         </div>
     </div>
     <hr>
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-3">
-{#            <h6>answers: {% answers|length %}</h6>#}
-            <h6>answers: 1</h6>
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-3 d-flex justify-content-center">
+            <button type="submit" class="btn btn-like">{{ question.get_number_of_likes }}<img src="{% static "icons/heart.svg" %}" width="16" height="16" style="margin-right: 8px">like</button>
         </div>
-        <div class="col-md-6 d-flex flex-direction-row">
+        <div class="col-md-9 d-flex flex-direction-row">
             <h6>Tags: </h6>
-        <p>{{ question.get_tags }}</p>
-            {% for tag in question.many_set.tags %}
-                <a style="padding-left: 16px" href="{% url "tag" tag %}">{{ tag }}</a>
+            {% for tag in question.tags.all %}
+                <a style="padding-left: 16px" href="{% url "tag" tag.title %}">{{ tag.title }}</a>
             {% endfor %}
         </div>
     </div>
