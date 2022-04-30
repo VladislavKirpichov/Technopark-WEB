@@ -5,7 +5,7 @@
         <h3>Question</h3>
         <div class="my-4">{% include "inc/question.html" %}</div>
         <h3>Answers</h3>
-        {% for answer in answers %}
+        {% for answer in page_content %}
             <div class="my-4">
                 {% include "inc/answer.html" %}
             </div>

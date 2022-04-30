@@ -29,7 +29,7 @@ class TagManager(models.Manager):
 
 class Tag(models.Model):
     title = models.CharField(max_length=64, verbose_name="Tag")
-    question = models.ManyToManyField('Question', related_name='tags')
+    questions = models.ManyToManyField('Question', related_name='tags')
     objects = TagManager()
 
     def __str__(self):

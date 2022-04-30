@@ -45,26 +45,19 @@ def question(request, i: int):
     if len(qstn) == 0:
         return HttpResponseNotFound("<h1>404 Page Not Found:(</h1>")
 
-    answers, answer = paginator(Question.objects.get_question_answers(i).values(),
-                                request, PAGINATION_SIZE)
-    content = {
-        "question": qstn[0],
-        "paginator": answers,
-        "answers": answer,
-    }
+    content = make_content(Question.objects.get_question_answers(i).values(), request)
+    content["question"] = qstn[0]
 
     return render(request, "question_page.html", content)
 
 
 def tag(request, tag: str):
-    pages = paginator(Question.objects.get_questions_by_tag(tag).values(), PAGINATION_SIZE)
-    page_number = request.GET.get('page')
-    page = pages.get_page(page_number)
-    return render(request, "index.html", {"paginator": pages, "page_content": page})
+    content = make_content(Question.objects.get_questions_by_tag(tag).values(), request)
+    return render(request, "index.html", content)
 
 
 def hot(request):
-    return render(request, "index.html", {"page_content": list(Question.objects.get_popular())})
+    return render(request, "index.html", make_content(list(Question.objects.get_popular()), request))
 
 
 def login(request):
