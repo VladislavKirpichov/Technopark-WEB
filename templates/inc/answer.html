@@ -2,19 +2,15 @@
 
 <div style="border: none; border-radius: 16px" class="col-12 card">
     <div class="row p-3">
-        <div class="col-md-2 d-flex align-items-center">
-            <img style="height: 0; padding-bottom: 100%; width: 100%; object-fit: cover" class="img-thumbnail avatar" src="{% static answer.img %}">
-        </div>
-        <div class="answer card-body col-md-6">
-            <h4>{{ answer.user }}</h4>
-            <p>{{ answer.content }}</p>
-            {% if answer.isCorrect %}
-                <h6 class="correct">Correct!</h6>
-            {% endif %}
-        </div>
+        <img style="height: 16px; width: 16px" class="img-thumbnail avatar" src="{% static answer.author.avatar %}">
+        <h4>{{ answer.author.user.first_name }} {{ answer.author.user.last_name }}</h4>
+        <p>{{ answer.content }}</p>
+        {% if answer.is_correct %}
+            <h6 class="correct">Correct!</h6>
+        {% endif %}
         <hr>
         <div class="col-12 d-flex justify-content-center">
-            <button style="background-color: #fff; padding: 4px 8px; border-radius: 4px; border: 1px solid rgba(27, 31, 35, 0.15);">❤️ like</button>
+            <button type="submit" class="btn btn-like">{{ question.get_number_of_likes }}<img src="{% static "icons/arrow-up-circle.svg" %}" width="16" height="16" style="margin-right: 8px">vote</button>
         </div>
     </div>
 </div>

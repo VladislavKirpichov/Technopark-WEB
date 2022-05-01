@@ -41,9 +41,10 @@ def ask(request):
 
 
 def question(request, i: int):
-    qstn = Question.objects.get_question_by_id(i).values()
-    if len(qstn) == 0:
-        return HttpResponseNotFound("<h1>404 Page Not Found:(</h1>")
+    try:
+        qstn = Question.objects.get_question_by_id(i).values()
+    except Question.DoesNotExist:
+        return HttpResponseNotFound("<html><h1>404 Page Not Found:(</h1></html>")
 
     content = make_content(Question.objects.get_question_answers(i).values(), request)
     content["question"] = qstn[0]
@@ -51,8 +52,9 @@ def question(request, i: int):
     return render(request, "question_page.html", content)
 
 
-def tag(request, tag: str):
-    content = make_content(Question.objects.get_questions_by_tag(tag).values(), request)
+def tag(request, title: str):
+    # content = make_content(Tag.objects.get_questions_by_tag(title).values(), request)
+    content = make_content(Question.objects.get_questions_by_tag_title(title).values(), request)
     return render(request, "index.html", content)
 
 

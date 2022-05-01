@@ -2,9 +2,12 @@
 
 <div>
     {% block content %}
-        <h3>Question</h3>
-        <div class="my-4">{% include "inc/question.html" %}</div>
-        <h3>Answers</h3>
+        <h6>QUESTION</h6>
+        <div class="my-4">
+            <h1>{{ question.title }}</h1>
+            <p>{{ question.content }}</p>
+        </div>
+        <h6>ANSWERS: {{ question.number_of_answers }}</h6>
         {% for answer in page_content %}
             <div class="my-4">
                 {% include "inc/answer.html" %}

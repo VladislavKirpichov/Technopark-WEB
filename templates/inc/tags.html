@@ -1,7 +1,7 @@
 {% load static %}
 
-<div class="d-flex flex-row">
+<div class="my-4 d-flex flex-row">
     {% for tag in tags %}
-        <p style="padding-right: 16px">{{ tag.title }}</p>
+        <a class="tag" href="{% url 'tag' tag.title %}">{{ tag.title }}</a>
     {% endfor %}
 </div>
