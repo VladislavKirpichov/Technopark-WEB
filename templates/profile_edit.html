@@ -2,12 +2,12 @@
 {% load bootstrap4 %}
 
 {% block content %}
-    <h3 class="mb-5">Log In</h3>
+    <h3 class="mb-5">Edit profile</h3>
     <div class="card p-5">
-        <form action="/login/" method="post">
+        <form action="/profile/edit/" method="post">
             {% csrf_token %}
             {% bootstrap_form form %}
-            <button class="btn" type="submit">Login</button>
+            <button class="btn" type="submit">Save</button>
         </form>
     </div>
 {% endblock %}
