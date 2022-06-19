@@ -16,25 +16,29 @@
                 </li>
             </ul>
         </div>
-        <div class="navbar-collapse">
+        <div class="navbar-collapse flex-grow-2">
             <div class="nav-item me-4">
                  <form action="" class="d-flex">
-                     <input type="text" class="form-control me-2" placeholder="Search">
+                     <label>
+                         <input type="text" class="form-control me-2" placeholder="Search">
+                     </label>
                      <button class="btn btn-outline-success btn-header">Search</button>
                  </form>
             </div>
             <div class="nav-item me-4 user">
                 {% if user.is_authenticated %}
                     <a style="text-decoration: none; color: #000" href="{% url "profile" %}">
-                        <div class="d-flex flex-row">
+                        <div class="d-flex flex-row justify-content-end align-items-center">
                             <div><img alt="user icon" height="24px" width="24px"></div>
-                            <div>
+                            <div class="me-4">
                                 <p>{{ user.first_name }} {{ user.last_name }}</p>
                                 <p style="font-size: 12px; margin-top: -12px; color: #959DA5">{{ user.username }}</p>
                             </div>
+                            <div>
+                                <a class="btn" href="{% url "logout_view" %}">Log out</a>
+                            </div>
                         </div>
                     </a>
-                    <a class="btn" href="{% url "logout_view" %}">Log out</a>
                 {% else %}
                     <a class="btn" href="{% url "login" %}">Login In</a>
                     <a class="btn" href="{% url "signup" %}">Sign Up</a>

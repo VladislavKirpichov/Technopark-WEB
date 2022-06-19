@@ -1,24 +1,13 @@
 {% extends "inc/base.html" %}
+{% load bootstrap4 %}
 
-<div>
-    {% block content %}
-        <form class="gy-4">
-            <h3>New Question</h3>
-            <div class="md-3 mb-3">
-                <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" placeholder="email@example.com">
-            </div>
-            <div class="md-3 mb-3 form-floating">
-                <textarea class="form-control" id="text" rows="5"></textarea>
-                <label for="text">Your question</label>
-            </div>
-            <div class="md-3 mb-3 form-floating">
-                <label for="tags">Tags</label>
-                <input type="text" class="form-control tags" id="tags">
-            </div>
-            <div class="md-3 mb-3">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
+{% block content %}
+    <h6>ASK QUESTION</h6>
+    <div class="card p-5 my-4">
+        <form action="/ask/" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button class="btn" type="submit">Ask!</button>
         </form>
-    {% endblock %}
-</div>
+    </div>
+{% endblock %}

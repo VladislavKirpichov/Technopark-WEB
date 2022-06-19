@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
-from app.models import Profile, Question
+from app.models import Profile, Question, Answer
 
 
 class LoginForm(forms.Form):
@@ -17,14 +17,6 @@ class LoginForm(forms.Form):
         return data
 
 
-class QuestionForm(forms.ModelForm):
-    text = forms.CharField(widget=forms.Textarea)
-
-    class Meta:
-        model = Question
-        fields = '__all__'
-
-
 class SignUpForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -32,7 +24,7 @@ class SignUpForm(forms.ModelForm):
         self.fields['last_name'].widget.attrs.update({'required': True})
         self.fields['username'].widget.attrs.update({'required': True})
         self.fields['email'].widget.attrs.update({'required': True})
-        self.fields['password'].widget.attrs.update({'required': True}) # TODO: сделать незаметным ввод пароля
+        self.fields['password'].widget.attrs.update({'type': 'password', 'required': True}) # TODO: сделать незаметным ввод пароля
 
     def clean_username(self):
         data = self.cleaned_data['username']
@@ -48,17 +40,32 @@ class SignUpForm(forms.ModelForm):
 
         return data
 
-    # def clean(self):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'username', 'email', 'password']
 
+
+class ProfileEdit(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = '__all__'
+        fields = ['avatar', 'bio']
 
 
-class EditProfile(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+class UserEdit(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'username', 'email']
+
+
+class QuestionForm(forms.ModelForm):
+    content = forms.CharField(widget=forms.Textarea)
 
     class Meta:
-        model = Profile
-        fields = '__all__'
+        model = Question
+        fields = ['title', 'content', 'tags']
+
+
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Answer
+        fields = ['content']

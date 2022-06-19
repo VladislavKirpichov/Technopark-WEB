@@ -38,7 +38,7 @@ class Profile(models.Model):
 
 class Answer(models.Model):
     question = models.ForeignKey('Question', related_name='answers', on_delete=models.CASCADE, default=1)
-    author = models.ForeignKey(Profile, related_name='answers', on_delete=models.CASCADE, default=1)
+    author = models.OneToOneField('Profile', related_name='answers', on_delete=models.CASCADE, default=1)
     content = models.TextField(blank=True)
     is_correct = models.BooleanField(default=False)
     user_rating = models.IntegerField(null=True)
@@ -73,11 +73,11 @@ class QuestionManager(models.Manager):
 
 
 class Question(models.Model):
-    title = models.CharField(max_length=TITLE_LENGTH, blank=True)
-    content = models.CharField(max_length=CONTENT_LENGTH, blank=True)
+    title = models.CharField(max_length=TITLE_LENGTH, blank=False)
+    content = models.CharField(max_length=CONTENT_LENGTH, blank=False)
     author = models.ForeignKey(Profile, related_name='questions', on_delete=models.CASCADE, default=1)
     published_date = models.DateTimeField(blank=True, auto_now=True)
-    number_of_answers = models.IntegerField(null=True)
+    number_of_answers = models.IntegerField(null=True, default=0)
     tags = models.ManyToManyField(Tag, related_name='questions')
 
     objects = QuestionManager()

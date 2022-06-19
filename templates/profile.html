@@ -2,7 +2,10 @@
 
 <div>
     {% block content %}
-        <h3>{{ user.first_name }} {{ user.last_name }}</h3>
-        <a class="btn" href="{% url "profile_edit" %}">Edit Profile</a>
+        <h6>INFO</h6>
+        <h1 class="my-4">{{ user.first_name }} {{ user.last_name }}</h1>
+        <h6>Bio:</h6>
+        <p>{{ user.profile.bio }}</p>
+        <a class="btn my-4" href="{% url "profile_edit" %}">Edit Profile</a>
     {% endblock %}
 </div>
