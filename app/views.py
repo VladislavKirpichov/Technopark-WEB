@@ -2,7 +2,7 @@ from urllib import request
 
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
+from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core.paginator import Paginator
@@ -78,9 +78,7 @@ def signup(request):
 
 def logout_view(request):
     logout(request)
-
-    # TODO: redirect текущую страницу
-    return redirect(reverse("index"))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def index(request):

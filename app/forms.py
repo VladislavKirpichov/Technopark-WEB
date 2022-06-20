@@ -18,13 +18,15 @@ class LoginForm(forms.Form):
 
 
 class SignUpForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['first_name'].widget.attrs.update({'required': True})
         self.fields['last_name'].widget.attrs.update({'required': True})
         self.fields['username'].widget.attrs.update({'required': True})
         self.fields['email'].widget.attrs.update({'required': True})
-        self.fields['password'].widget.attrs.update({'type': 'password', 'required': True}) # TODO: сделать незаметным ввод пароля
+        self.fields['password'].widget.attrs.update({'type': 'password', 'required': True})
 
     def clean_username(self):
         data = self.cleaned_data['username']
