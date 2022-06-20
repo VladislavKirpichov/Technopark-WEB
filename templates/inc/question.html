@@ -8,7 +8,6 @@
         <div class="card-body col-sm-12 col-md-9">
             <h4><a style="color: #24292E;" href="{% url "question" question.id %}">{{ question.title }}</a></h4>
             <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ question.content }}</p>
-            <a href="{% url 'answer' question.id %}" class="btn btn-primary">Answer this question</a>
             <h6 style="font-size: 12px; margin-top: 8px; color: grey">answers: {{ question.number_of_answers }}</h6>
         </div>
     </div>

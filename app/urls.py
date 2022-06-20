@@ -1,4 +1,7 @@
+from django.conf.urls.static import static
 from django.urls import path
+
+from askme import settings
 from . import views
 
 urlpatterns = [
@@ -12,5 +15,9 @@ urlpatterns = [
     path('logout/', views.logout_view, name="logout_view"),
     path('ask/', views.ask, name="ask"),
     path('answer/<int:id>/', views.answer, name="answer"),
-    path('', views.index, name="index")
-]
+    path('', views.index, name="index"),
+    path('vote', views.vote, name="vote-view")
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# TODO:
+# static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

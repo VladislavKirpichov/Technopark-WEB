@@ -29,7 +29,7 @@ class Tag(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='images', null=True, blank=True,)
+    avatar = models.ImageField(null=True, blank=True, default='panda.png', upload_to='avatar/%Y/%m/%d/')
     bio = models.TextField(null=True, blank=True)
 
     def __str__(self):

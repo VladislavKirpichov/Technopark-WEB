@@ -13,6 +13,11 @@
                 <a class="btn btn-nav me-2" href="?page={{ p.number }}">{{ p.number }}</a>
             {% endfor %}
         </nav>
+    <script>
+        $(".btn-like").on('click', function (ev) {
+            return console.log('like')
+        })
+    </script>
     {% endblock %}
     {% block tags %}
         {% include "inc/tags.html" %}

@@ -2,7 +2,7 @@ from urllib import request
 
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core.paginator import Paginator
@@ -97,7 +97,7 @@ def profile_edit(request):
         u_form = UserEdit(instance=request.user)
 
     elif request.method == 'POST':
-        p_form = ProfileEdit(data=request.POST, instance=request.user.profile)
+        p_form = ProfileEdit(data=request.POST, instance=request.user.profile, files=request.FILES)
         u_form = UserEdit(data=request.POST, instance=request.user)
         if p_form.is_valid() and u_form.is_valid():
             u_form.instance.save()
@@ -204,3 +204,7 @@ def tag(request, title: str):
 
 def hot(request):
     return render(request, "index.html", make_content(list(Question.objects.get_popular()), request))
+
+def vote(request):
+    print(request.GET)
+    return JsonResponse({'result_code': 0})
