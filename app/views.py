@@ -174,7 +174,7 @@ def answer(request, id: int):
 
 def question(request, i: int):
     qstn = Question.objects.get_question_by_id(i).values()
-    content = make_content(Question.objects.get_question_answers(i).values(), request)
+    content = make_content(Answer.objects.get_answer_by_question(i), request)
     content["question"] = qstn[0]
 
     if request.method == 'GET':
@@ -200,7 +200,6 @@ def question(request, i: int):
 
 
 def tag(request, title: str):
-    # content = make_content(Tag.objects.get_questions_by_tag(title).values(), request)
     content = make_content(Question.objects.get_questions_by_tag_title(title).values(), request)
     return render(request, "index.html", content)
 

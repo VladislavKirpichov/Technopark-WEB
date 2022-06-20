@@ -1,12 +1,15 @@
 {% load static %}
 
 <div style="border: none; border-radius: 16px" class="col-12 card">
+
     <div class="row p-3">
-        <img style="height: 16px; width: 16px" class="img-thumbnail avatar" src="{% static answer.author.avatar %}">
-        <h4>{{ answer.author.user.first_name }} {{ answer.author.user.last_name }}</h4>
-        <p>{{ answer.content }}</p>
+        <div class="d-flex flex-row align-items-center">
+            <img style="height: 16px; width: 16px" class="img-thumbnail avatar" src="{% static answer.author.avatar %}">
+            <h6 class="my-4 mx-4">{{ answer.author.user.first_name }} {{ answer.author.user.last_name }}</h6>
+        </div>
+        <p class="my-4">{{ answer.content }}</p>
         {% if answer.is_correct %}
-            <h6 class="correct">Correct!</h6>
+            <h6 class="correct my-2">Correct!</h6>
         {% endif %}
         <hr>
         <div class="col-12 d-flex justify-content-center">

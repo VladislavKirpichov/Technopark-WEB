@@ -9,7 +9,7 @@
             <p>{{ question.content }}</p>
         </div>
         <h6>ANSWERS: {{ question.number_of_answers }}</h6>
-        {% for answer in page_content %}
+        {% for answer in page_content.object_list %}
             <div class="my-4">
                 {% include "inc/answer.html" %}
             </div>

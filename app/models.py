@@ -36,12 +36,20 @@ class Profile(models.Model):
         return self.user.username
 
 
+
+class AnswerManager(models.Manager):
+    def get_answer_by_question(self, question_id: int):
+        return self.filter(question_id=question_id)
+
+
 class Answer(models.Model):
     question = models.ForeignKey('Question', related_name='answers', on_delete=models.CASCADE, default=1)
     author = models.OneToOneField('Profile', related_name='answers', on_delete=models.CASCADE, default=1)
     content = models.TextField(blank=True)
     is_correct = models.BooleanField(default=False)
     user_rating = models.IntegerField(null=True)
+
+    objects = AnswerManager()
 
 
 class Like(models.Model):
@@ -69,7 +77,7 @@ class QuestionManager(models.Manager):
         return self.filter(tags__title=title)
 
     def get_question_answers(self, question_id: int):
-        return self.filter(answers__author__questions=question_id)
+        return self.filter(author__answers__question_id=question_id)
 
 
 class Question(models.Model):
@@ -84,3 +92,6 @@ class Question(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_question_answer(self):
+        return self.answers

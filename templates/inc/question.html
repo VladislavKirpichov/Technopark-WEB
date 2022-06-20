@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-9 d-flex flex-direction-row">
             <h6>Tags: </h6>
-            {% for tag in question.tags.all %}
+            {% for tag in question.tags %}
                 <a class="tag" href="{% url "tag" tag.title %}">{{ tag.title }}</a>
             {% endfor %}
         </div>
