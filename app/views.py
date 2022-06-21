@@ -59,7 +59,7 @@ def tag(request, title: str):
 
 
 def hot(request):
-    return render(request, "index.html", make_content(list(Question.objects.get_popular()), request))
+    return render(request, "index.html", make_content(Question.objects.hot().values(), request))
 
 
 def login(request):
