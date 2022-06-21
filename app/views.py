@@ -7,11 +7,12 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.urls import reverse
+from django.views.decorators.http import require_POST
 from django.views.generic import ListView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from .models import Question, Answer, Profile, Tag
+from .models import Question, Answer, Profile, Tag, Like
 from .forms import LoginForm, SignUpForm, ProfileEdit, UserEdit, QuestionForm, AnswerForm
 
 # Create your views here.
@@ -205,6 +206,14 @@ def tag(request, title: str):
 def hot(request):
     return render(request, "index.html", make_content(list(Question.objects.get_popular()), request))
 
+
+@login_required
+@require_POST
 def vote(request):
-    print(request.GET)
-    return JsonResponse({'result_code': 0})
+    question_id = request.POST['question_id']
+    # TODO: сделать валидацию
+    question = Question.objects.get(id=question_id)
+    like = Like.objects.create(user=request.user, question=question)
+    like.save()
+    print(question_id)
+    return JsonResponse({'new_rating': like.likes})

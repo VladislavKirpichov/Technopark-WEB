@@ -56,6 +56,10 @@ class Like(models.Model):
     user = models.ForeignKey(Profile, related_name='likes', on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
 
+    question = models.ForeignKey('Question', related_name='likes', on_delete=models.CASCADE, default=0, blank=True, null=True)
+    answer = models.ForeignKey(Answer, related_name='likes', on_delete=models.CASCADE, default=0, blank=True,
+                                 null=True)
+
     object_id = models.PositiveIntegerField()
     like_object = GenericForeignKey('content_type', 'object_id')
 

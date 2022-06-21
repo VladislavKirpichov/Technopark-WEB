@@ -1,6 +1,7 @@
 {% load static %}
 
-<div style="border: none; border-radius: 16px" class="col-12 card p-2">
+<form style="border: none; border-radius: 16px" class="col-12 card p-2">
+{% csrf_token %}
     <div class="row">
         <div class="col-sm-12 col-md-3 d-flex justify-content-center align-items-center">
             <img style="height: 50%; width: 50%; object-fit: cover" class="img-thumbnail" src="{{ question.author.avatar }}">
@@ -14,7 +15,7 @@
     <hr>
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col-md-3 d-flex justify-content-center">
-            <button type="submit" class="btn btn-like">{{ question.get_number_of_likes }}<img src="{% static "icons/arrow-up-circle.svg" %}" width="16" height="16" style="margin-right: 8px">vote</button>
+            <button type="button" data-id="{{ question.id }}" class="btn btn-like">{{ question.get_number_of_likes }}<img src="{% static "icons/arrow-up-circle.svg" %}" width="16" height="16" style="margin-right: 8px">vote</button>
         </div>
         <div class="col-md-9 d-flex flex-direction-row">
             <h6>Tags: </h6>
@@ -23,4 +24,4 @@
             {% endfor %}
         </div>
     </div>
-</div>
+</form>
