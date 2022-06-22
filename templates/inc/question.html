@@ -1,12 +1,10 @@
 {% load static %}
 
-<form style="border: none; border-radius: 16px" class="col-12 card p-2">
+<form style="border: none; border-radius: 16px" class="col-12 card p-4">
 {% csrf_token %}
     <div class="row">
-        <div class="col-sm-12 col-md-3 d-flex justify-content-center align-items-center">
-            <img style="height: 50%; width: 50%; object-fit: cover" class="img-thumbnail" src="{{ question.author.avatar }}">
-        </div>
         <div class="card-body col-sm-12 col-md-9">
+            <h6>{{ question.author.user.first_name }} {{ question.author.user.last_name }}</h6>
             <h4><a style="color: #24292E;" href="{% url "question" question.id %}">{{ question.title }}</a></h4>
             <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ question.content }}</p>
             <h6 style="font-size: 12px; margin-top: 8px; color: grey">answers: {{ question.number_of_answers }}</h6>
@@ -14,14 +12,16 @@
     </div>
     <hr>
     <div class="row d-flex justify-content-center align-items-center">
-        <div class="col-md-3 d-flex justify-content-center">
-            <button type="button" data-id="{{ question.id }}" class="btn btn-like">{{ question.get_number_of_likes }}<img src="{% static "icons/arrow-up-circle.svg" %}" width="16" height="16" style="margin-right: 8px">vote</button>
+        <div class="col-md-3 d-flex">
+            <button type="button" data-id="{{ question.id }}" style="padding: 12px" class="btn btn-light btn-like d-flex flex-row ">
+                <p>{{ question.likes }} likes</p>
+            </button>
         </div>
         <div class="col-md-9 d-flex flex-direction-row">
             <h6>Tags: </h6>
-            {% for tag in question.tags %}
-                <a class="tag" href="{% url "tag" tag.title %}">{{ tag.title }}</a>
-            {% endfor %}
+{#            {% for tag in question.tags %}#}
+{#                <a class="tag" href="{% url "tag" tag.title %}">{{ tag.title }}</a>#}
+{#            {% endfor %}#}
         </div>
     </div>
 </form>

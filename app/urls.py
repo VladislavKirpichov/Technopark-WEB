@@ -16,7 +16,9 @@ urlpatterns = [
     path('ask/', views.ask, name="ask"),
     path('answer/<int:id>/', views.answer, name="answer"),
     path('', views.index, name="index"),
-    path('vote/', views.vote, name="vote-view")
+    path('likequestion/', views.like_question, name="like_question-view"),
+    path('setwrightanswer/', views.set_wright_answer, name="set_wright_answer"),
+    path('setwronganswer/', views.set_wrong_answer, name="set_wrong_answer"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # TODO:

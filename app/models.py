@@ -36,35 +36,49 @@ class Profile(models.Model):
         return self.user.username
 
 
-
 class AnswerManager(models.Manager):
     def get_answer_by_question(self, question_id: int):
         return self.filter(question_id=question_id)
 
 
 class Answer(models.Model):
-    question = models.ForeignKey('Question', related_name='answers', on_delete=models.CASCADE, default=1)
-    author = models.OneToOneField('Profile', related_name='answers', on_delete=models.CASCADE, default=1)
+    question = models.ForeignKey('Question', related_name='answers', on_delete=models.CASCADE)
+    author = models.OneToOneField('Profile', related_name='answers', on_delete=models.CASCADE)
     content = models.TextField(blank=True)
     is_correct = models.BooleanField(default=False)
-    user_rating = models.IntegerField(null=True)
 
     objects = AnswerManager()
 
+    def __str__(self):
+        return self.content
 
-class Like(models.Model):
-    user = models.ForeignKey(Profile, related_name='likes', on_delete=models.CASCADE)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    def likes(self):
+        return LikeAnswer.objects.filter(answer_id=self.id).count()
 
-    question = models.ForeignKey('Question', related_name='likes', on_delete=models.CASCADE, default=0, blank=True, null=True)
-    answer = models.ForeignKey(Answer, related_name='likes', on_delete=models.CASCADE, default=0, blank=True,
-                                 null=True)
+    def like(self, profile):
+        like = LikeAnswer.objects.filter(answer_id=self.id, profile=profile)
+        if like:
+            like.delete()
+        else:
+            like = LikeAnswer(answer_id=self.id, profile=profile)
+            like.save()
 
-    object_id = models.PositiveIntegerField()
-    like_object = GenericForeignKey('content_type', 'object_id')
+    def set_correct_answer(self):
+        self.is_correct = True
+        self.save()
+
+    def set_not_correct_answer(self):
+        self.is_correct = False
+        self.save()
 
 
 class QuestionManager(models.Manager):
+    def all(self):
+        return self.order_by('published_date')
+
+    def hot(self):
+        return self.order_by('likes')
+
     def get_popular(self):
         return self.filter(likes__gt=10)
 
@@ -87,9 +101,8 @@ class QuestionManager(models.Manager):
 class Question(models.Model):
     title = models.CharField(max_length=TITLE_LENGTH, blank=False)
     content = models.CharField(max_length=CONTENT_LENGTH, blank=False)
-    author = models.ForeignKey(Profile, related_name='questions', on_delete=models.CASCADE, default=1)
+    author = models.ForeignKey(Profile, related_name='questions', on_delete=models.CASCADE)
     published_date = models.DateTimeField(blank=True, auto_now=True)
-    number_of_answers = models.IntegerField(null=True, default=0)
     tags = models.ManyToManyField(Tag, related_name='questions')
 
     objects = QuestionManager()
@@ -99,3 +112,37 @@ class Question(models.Model):
 
     def get_question_answer(self):
         return self.answers
+
+    def likes(self):
+        return LikeQuestion.objects.filter(question_id=self.id).count()
+
+    def like(self, profile: Profile):
+        like = LikeQuestion.objects.filter(question_id=self.id, profile=profile)
+        if like:
+            like.delete()
+        else:
+            like = LikeQuestion(question_id=self.id, profile=profile)
+            like.save()
+
+    def number_of_answers(self):
+        return Answer.objects.filter(question_id=self.id).count()
+
+    def get_author_username(self):
+        return self.author.user.username
+
+
+class LikeQuestion(models.Model):
+    question = models.ForeignKey(Question, related_name="like", on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    tests = models.CharField(default="test", max_length=123)
+
+    def __str__(self):
+        return f"{self.profile.user.username} {self.question.title}"
+
+
+class LikeAnswer(models.Model):
+    answer = models.ForeignKey(Answer, related_name="like", on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.profile.user.username} {self.answer.question.title}"

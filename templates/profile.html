@@ -5,10 +5,10 @@
         <h6>INFO</h6>
         <img class="my-4" src="{{ user.profile.avatar.url }}" height="80" width="80" alt="avatar">
         <h1 class="my-4">{{ user.first_name }} {{ user.last_name }}</h1>
-        <h6>Bio:</h6>
+        <h6 class="mt-4">Bio:</h6>
         <p>{{ user.profile.bio }}</p>
-        <h6>Contacts:</h6>
-        <p>Email: {{ user.email }}</p>s
-        <a class="btn my-2" href="{% url "profile_edit" %}">Edit Profile</a>
+        <h6 class="mt-4">Contacts:</h6>
+        <p>Email: {{ user.email }}</p>
+        <a class="btn btn-primary my-2" href="{% url "profile_edit" %}">Edit Profile</a>
     {% endblock %}
 </div>

@@ -8,12 +8,23 @@
             <h6 class="my-2 mx-3">{{ answer.author.user.first_name }} {{ answer.author.user.last_name }}</h6>
         </div>
         <p class="my-2">{{ answer.content }}</p>
-        {% if answer.is_correct %}
-            <h6 class="correct my-2">Correct!</h6>
-        {% endif %}
         <hr>
-        <div class="col-12 d-flex justify-content-center">
-            <button type="submit" class="btn btn-like">{{ question.get_number_of_likes }}<img src="{% static "icons/arrow-up-circle.svg" %}" width="16" height="16" style="margin-right: 8px">vote</button>
+        <div class="col-12 d-flex justify-content-between align-items-end">
+            <button type="submit" class="btn btn-light btn-like">{{ question.get_number_of_likes }}<img src="{% static "icons/arrow-up-circle.svg" %}" width="16" height="16" style="margin-right: 8px">vote</button>
+            {% if answer.is_correct %}
+                <h6 style="opacity: 1" id="correct{{ answer.id }}" style="font-size: 12px; font-weight: bold">Correct!</h6>
+            {% else %}
+                <h6 style="opacity: 0" id="correct{{ answer.id }}" style="font-size: 12px; font-weight: bold">Correct!</h6>
+            {% endif %}
+            {% if answer.question.author.user == user %}
+            <div>
+                {% if answer.is_correct %}
+                    <button data-id="{{ answer.id }}" style="font-size: 12px; font-weight: bold" class="btn btn-primary set-wrong" type="button">Set as wrong answer</button>
+                {% else %}
+                    <button data-id="{{ answer.id }}" style="font-size: 12px; font-weight: bold" class="btn btn-primary set-wright" type="button">Set as wright answer</button>
+                {% endif %}
+            </div>
+        {% endif %}
         </div>
     </div>
 </div>

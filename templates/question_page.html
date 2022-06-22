@@ -1,5 +1,6 @@
 {% extends 'inc/base.html' %}
 {% load bootstrap4 %}
+{% load static %}
 
 <div>
     {% block content %}
@@ -8,6 +9,11 @@
             <h1>{{ question.title }}</h1>
             <p>{{ question.content }}</p>
         </div>
+        <form action="/questions/question{{ question.id }}/" method="post">
+            {% csrf_token %}
+            {% bootstrap_form answer_form %}
+            <button class="btn btn-primary my-4" type="submit">Answer this question</button>
+        </form>
         <h6>ANSWERS: {{ question.number_of_answers }}</h6>
         {% for answer in page_content.object_list %}
             <div class="my-4">
@@ -15,15 +21,11 @@
             </div>
         {% endfor %}
         <hr>
-        <form action="/questions/question{{ question.id }}/" method="post">
-            {% csrf_token %}
-            {% bootstrap_form answer_form %}
-            <button class="btn" type="submit">Answer this question</button>
-        </form>
         <nav class="d-flex justify-content-center nav nav-pills me-auto">
             {% for p in paginator %}
-                <a class="btn btn-nav me-2" href="?page={{ p.number }}">{{ p.number }}</a>
+                <a class="btn btn-toolbar btn-nav me-2" href="?page={{ p.number }}">{{ p.number }}</a>
             {% endfor %}
         </nav>
+        <script src="{% static 'js/set_answer.js' %} "></script>
     {% endblock %}
 </div>
